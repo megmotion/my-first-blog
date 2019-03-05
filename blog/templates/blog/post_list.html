@@ -1,13 +1,54 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+<div class="posts-wrapper col-md-9">
 	{% for post in posts %}
-	    <div class="post">
-	        <div class="date">
-	            {{ post.published_date }}
-	        </div>
-	        <h1 ><a class="post-title" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-	        <p>{{ post.text|linebreaksbr }}</p>
-	    </div>
+		<div class="col-sm-12">
+			<div class="thumbnail">
+				<div class="caption">
+					
+					{% if post.image %}
+					<img src="{{ post.image.url }}" class="img-responsive" alt="My image"> 
+					{% endif %}
+					<div class="post-header" >
+						<small> {{ post.published_date|timesince }} ago  by {{post.author}}</small>
+						<h3><a class = "post-title" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+					</div>
+					<p>{{ post.text|linebreaksbr}}</p>
+					</br>
+					<a href="{% url 'post_detail' pk=post.pk %}">Komentarze: {{ post.approved_comments.count }}</a>
+					</br>
+					</br>
+					<p><a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark" role="button">Read more</a></p>
+				</div>
+			</div>
+		</div> 
 	{% endfor %}
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if posts.has_previous %}
+	            <a href="?page=1">&laquo; first</a>
+	            <a href="?page={{ posts.previous_page_number }}">previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+	        </span>
+
+	        {% if posts.has_next %}
+	            <a href="?page={{ posts.next_page_number }}">next</a>
+	            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+	        {% endif %}
+	    </span>
+	</div>
+</div> 
+
+<div class="sidebar col-md-3 " >
+		</br>
+		<form  role="search" method="get" action="#">
+		<div class="form-group"><input type="text" class="form-control" name="q" value="" placeholder="WYSZUKAJ NA BLOGU"></div>
+	</form>
+</div>
 {% endblock %}
+
+

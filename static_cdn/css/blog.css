@@ -1,0 +1,18 @@
+ body {
+ 	background: #040303;
+ }
+
+ .navbar{
+ 	border-radius: 0;
+ }
+.navbar-brand{
+	font-family: 'Berkshire Swash', cursive;
+	font-size: 24px;
+	color: white;
+}
+
+
+
+.post {
+	padding-bottom: 20px;
+}

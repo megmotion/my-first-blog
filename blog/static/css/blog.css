@@ -1,62 +1,69 @@
-.page-header {
-    background-color: black;
-    margin-top: 0;
-    padding: 10px 20px 20px 20px;
-    border: 0
+ body {
+ 	background: #040303;
+ 	color: white;
 }
 
-.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-    color: #9C9D9B;
-    font-size: 36pt;
-    text-decoration: none;
+ a, a:hover, a:focus {
+   	color: white;
+   	text-decoration: none;
 }
 
-body {
-	background-color: #191919;
+.btn {
+	padding: 5px 25px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+	border: 2px solid white;
+	border-radius: 0; 
+	transition: all 0.5s ease-in-out;
+	cursor: pointer;
+	background-color: transparent;
+	text-transform: uppercase;
 }
-
-
-.content {
-	background-color: #191919;
-    margin-left: 40px ;
+.post-header {
+  text-align: center;
 }
-
-
-h1, h2, h3, h4 {
-    font-family: 'Lobster', cursive;
-}
-
-p, {
-    color: #9C9D9B;
-}
-
 .post-title {
-	 color: #9C9D9B;
-}
-.date {
-    color: #9C9D9B;
-}
-
-.save {
-    float: right;
+    font-size: 22px;
+    line-height: 8px;
+    margin: 0 ;
+    padding: 0;
+    text-transform: uppercase;
 }
 
-.post-form textarea, .post-form input {
-    width: 100%;
+.thumbnail, .sidebar {
+	background: #0A0A0A;
+	border: 0px;
+	border-radius: 3px;
 }
 
-.top-menu, .top-menu:hover, .top-menu:visited {
-    color: #9C9D9B;
-    float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+ .navbar{
+ 	border-radius: 0;
+ 	padding:.6% 10rem;
+    margin-bottom: 4rem;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    background-color: #18191b;
+ }
+.navbar-brand{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	color: white;
+    text-transform: none;
 }
 
 .post {
-    margin-bottom: 60px;
+	padding-bottom: 20px;
 }
 
-.post h2 a, .post h2 a:visited {
-    color: #C8C9C7;
+.thumbnail .caption {
+    padding: 0;
+    color: #18191b;
 }
 
+@media (max-width: 768px) {
+    .navbar {
+    padding:1% 2rem;
+    }
+    
+}
