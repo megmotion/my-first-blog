@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Ciężkie Życie Horacka{% endblock %}
+{% block content %}
+<article class="cf">
+	{% for post in posts %}
+	<div class="fl w-50 grow w-third-ns pa2 pa3-ns">
+		<a href="{% url 'post_detail' pk=post.pk %}" class="cover db aspect-ratio aspect-ratio--1x1 bg-center hide-child no-underline dim" style="background-image:url({{ post.image.url }})">
+			<div class="white mt0 mb0 tc pa6-l pa4 child">
+				<h3 class="mt0 mb0">{{ post.title }}</h3>
+				<p>{{ post.published_date|timesince }} ago</p>
+				<p>By {{post.author}}</p>
+			</div>
+		</a>
+	</div>
+    {% endfor %}
+</article>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Ciężkie Życie Horacka{% endblock %}
+{% block content %}
+<div class="mw7 center avenir">
+    <div class="bt bb b--black-10 bg-white mt3 mb3 ph3">
+        <h2 class="heading">Contact Me</h2>
+        <form  accept="" action="https://formspree.io/megmotion@gmail.com" method="POST" name="sentMessage" id="contactForm">
+            <div class="">          
+                <input type="text" name="name" class="pa2 input-reset b--transparent bg-transparent hover-bg-washed-yellow w-100" placeholder="Name*" id="name" required/>
+                <input type="email" name="_replyto" class="db mv3 pa2 input-reset b--transparent bg-transparent hover-bg-washed-yellow w-100" placeholder="Email Address*" id="email" required/>
+                <input type="subject" name="subject" class="db mv3 pa2 input-reset b--transparent bg-transparent hover-bg-washed-yellow w-100" placeholder="Subject" id="subject" required/>
+                <textarea rows="4" name="message" class="db mv3 pa2 input-reset b--transparent bg-transparent hover-bg-washed-yellows w-100" placeholder="Message*" id="message"></textarea>
+                <button type="submit" class="db mv3 f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns bg-light-red">Send messege</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

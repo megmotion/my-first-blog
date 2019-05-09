@@ -3,48 +3,53 @@
 
 {% block title %}Ciężkie Życie Horacka{% endblock %}
 {% block content %}
-<div class="col-md-10">
-    <div class="post">
-        <div>
-	        {% if post.published_date %}	          
-	            <div class="post-header" >
-					<small> {{ post.published_date|timesince }} ago  by {{post.author}}</small>
-					<h3><a class = "post-title" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+<div class="posts-wrapper">
+	<div class="mw7 center avenir">
+		<article class="bt bb b--black-10 bg-white mt3 mb3">
+			{% if post.image %}
+	        	<img src="{{ post.image.url }}" class="w-90 pv4 ph4" alt="My image"> 
+			{% endif %}
+	  		<header class="avenir tc-l ph2 ph2-ns">
+	  			<a href="{% url 'post_detail' pk=post.pk %}" class="db f3 fw1 mt0 lh-title baskerville i no-underline black" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+	  			{% if post.published_date %}	          
+	            	<p class="f6 lh-copy mv0 ">{{ post.published_date|timesince }} ago | By {{post.author}} </p>
+	        	{% else %}
+	    			<a class="f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mb3 mr2 mr3-ns bg-light-red" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+	        	{% endif %}
+	  		</header>
+	  		<section class="pt3 pb4">
+		        <p class="f5 mb5 center measure lh-copy">
+		          {{ post.text|linebreaksbr }}
+		        </p>
+		        
+		        {% if user.is_authenticated %}
+		        <div class="mw5 center">
+		       		<a class="f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns bg-near-black" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+			     	<a class="f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns bg-near-black" href="{% url 'post_remove' pk=post.pk %}">Delete</a>
 				</div>
-	        {% else %}
-	    		<a class="btn btn-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
-	        {% endif %}
-    	</div>
-        {% if user.is_authenticated %}
-       		<a class="btn btn-dark" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-	     	<a class="btn btn-dark" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-		{% endif %}
-		
-        {% if post.image %}
-        	<img src="{{ post.image.url }}" class="img-responsive" alt="My image"> 
-		{% endif %}
-		
-        <p>{{ post.text|linebreaksbr }}</p>
-    </div>
-
-    <hr>
-    <a class="btn btn-dark" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
-	{% for comment in post.comments.all %}
-		{% if user.is_authenticated or comment.approved_comment %}
-	    <div class="comment">
-	        <div class="date">
-	            {{ comment.created_date }}
-	            {% if not comment.approved_comment %}
-	                <a class="btn btn-dark" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-	                <a class="btn btn-dark" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
-	            {% endif %}
-        	</div>
-	        <strong>{{ comment.author }}</strong>
-	        <p>{{ comment.text|linebreaks }}</p>
-	    </div>
-	    {% endif %}
-	{% empty %}
-	    <p>No comments here yet :(</p>
-	{% endfor %}
-</div>	
+				{% endif %}
+		    </section>		  
+		    <div class="mw6 center">  
+			    <a class="f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mb3 mr2 mr3-ns bg-light-red" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+				{% for comment in post.comments.all %}
+					{% if user.is_authenticated or comment.approved_comment %}
+				    <div class="comment">
+				        <div class="date">
+				           	{{ comment.created_date }}
+			        	</div>
+				        <strong>{{ comment.author }}</strong>
+				        <p>{{ comment.text|linebreaks }}</p>
+				        {% if not comment.approved_comment %}
+				                <a class="f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns bg-light-red" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
+				                <a class="f6 dib white bg-animate hover-bg-silver hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns bg-light-red" href="{% url 'comment_remove' pk=comment.pk %}">Delete</a>
+				        {% endif %}
+				    </div>
+				    {% endif %}
+				{% empty %}
+				    <p>No comments here yet :(</p>
+				{% endfor %}
+			</div>
+		</article>
+	</div>	
+</div>
 {% endblock %}

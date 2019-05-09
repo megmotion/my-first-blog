@@ -3,99 +3,66 @@
 <html>
     <head>
 	    	<title>{% block title %}Ciężkie Życie Horacka{% endblock %}</title>
-	    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	    	<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-	    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	    	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Open+Sans" rel="stylesheet" type='text/css'>
-
+	    	<link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>	
     </head>
-    <body>
-    <!--Top Bar-->
-    <div class="top-wrapper">
-        <div class="top-left col-md-8">
-        </div>
-        <div class="top-right col-md-4">
-            <div class="search-box">
-                <div class="search-line">
-                    <form  role="search" method="get" action="#" id="searchform" class="searchform">
-                        <input type="text" name="q" value="" placeholder="Search and hit enter...">
-                        <i class="fa fa-search search-desktop" aria-hidden="true"></i>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="header-image">
-        <div class="topimage">
-        </div>
-    </div>
-	<div class="pagenav">
-        <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
-	    	<!-- Brand and toggle get grouped for better mobile display --> 
-			
-			<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#topNavBar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<!-- Collect the nav links, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="topNavBar">
-			  <!-- links -->
-		    	<ul class="navbar-nav ml-auto">		      		
-    				<li class="nav-item">
-    					<a class="nav-link text-nowrap" href="{% url 'post_list' %}">Blog</a>
-    				</li>
-    				<li class="nav-item">
-    					<a class="nav-link text-nowrap" href="#">O Horacku</a>
-    				</li>
-    				<li class="nav-item">
-    					<a class="nav-link text-nowrap" href="#">Galeria</a>
-    				</li>
-    				<li class="nav-item">
-    					<a class="nav-link text-nowrap" href="#">Kontakt</a>
-    				</li>
-    				{% if user.is_authenticated %} 
-    				<li class="nav-item"> 
-    					<a class="nav-link text-nowrap" href="{% url 'post_new' %}">Nowy post</a>
-    				</li>
-    				<li class="nav-item"> 
-    					<a class="nav-link text-nowrap" href="{% url 'post_draft_list' %}">Drafty</a>
-    				</li>
-    				<li class="nav-item"> 
-    					<a class="nav-link text-nowrap" href="{% url 'logout' %}" >Log out </a>
-    				</li>		    			
-					{% else %}
-    				<li class="nav-item">
-    					<a class="nav-link text-nowrap" href="{% url 'login' %}" > Login</a>
-    				</li>
-					{% endif %}  				
-    			</ul>
-    		</div>
-	    </nav> 
+    <body class="avenir next bg-near-white">
+    <!--Nav Bar-->
+	<div class="pagenav w-100 sans-serif bg-near-black">
+        <nav class="">
+          <div class="pa2 tr">
+            <form class="dib mb0 " method="GET" action="{% url 'search' %}">
+                <input name ="q" value="{{request.GET.q}}"type="text" placeholder="Search" class="mw-100 w-100 w4-ns f5 input-reset ba b--black-20 pv1 ph2 br-pill border-box mr3 mr3-ns"/>
+            </form>
+            {% if user.is_authenticated %} 
+                <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns" href="{% url 'logout' %}" >Log out </a>                     
+            {% else %}
+                <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv1 ph4 br-pill ba b--white-20 mr2 mr3-ns" href="{% url 'login' %}">Sign In</a>
+            {% endif %}
+          </div>
+        </nav>
+        <header class="bg-white black-80 tc pv4 avenir">
+          <h1 class="mt2 mb0 baskerville i fw1 f1">Horacy</h1>
+          <h2 class="mt2 mb0 f6 fw4 ttu tracked">Przygody przystojnego bruneta</h2>
+          <nav class="bt bb tc mw8 center mt4">
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-lightest-blue dib pa3 ph4-l" href="{% url 'post_list' %}">Blog</a>
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-yellow dib pa3 ph4-l" href="{% url 'gallery' %}">Gallery</a>
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l" href="/contact">Contact</a>
+            {% if user.is_authenticated %} 
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-green dib pa3 ph4-l" href="{% url 'post_new' %}">Nowy post</a>
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l" href="{% url 'post_draft_list' %}">Drafty</a>
+            {% endif %}
+          </nav>
+        </header>	
     </div>
     <!--End Top Bar-->
 	    <div class="content container">
 	        <div class="row">
-	        	
-	            <div class="col-md-10">
+	            <div >
 	            {% block content %}
 	            {% endblock %}
 	            </div>
 	        </div>
 	    </div>
-
-        <div class="sidebar">
-            <div class="search-box">
-                <h3> Search </h3>
-                <div class="search-line">
-                    <form  role="search" method="get" action="#" id="searchform" class="searchform">
-                        <input type="text" class="form-control" name="q" value="" placeholder="Search and hit enter...">
-                        <i class="fa fa-search search-desktop" aria-hidden="true"></i>
-                    </form>
-                </div>
-            </div>
-        </div>
-<!--_Script source files-->
-    	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"> </script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"> </script>
-    </body>
+    <footer class="pv3 ph2 ph5-ns tc bg-near-black">
+      <a class="link dim black dib h2 w2 br-100 mr3 pa2 bg-near-white ba b--black-10" href="https://www.facebook.com/gosia.kurowska.90" title="">
+        <svg data-icon="facebook" viewBox="0 0 32 32" style="fill:currentcolor">
+          <title>facebook icon</title>
+          <path d="M8 12 L13 12 L13 8 C13 2 17 1 24 2 L24 7 C20 7 19 7 19 10 L19 12 L24 12 L23 18 L19 18 L19 30 L13 30 L13 18 L8 18 z"></path>
+        </svg>
+      </a>
+      <a class="link dim black dib h2 w2 br-100 mr3 pa2 bg-near-white ba b--black-10" href="https://www.linkedin.com/in/ma%C5%82gorzata-kurowska-6085b3100/" title="">
+        <svg data-icon="linkedin" viewBox="0 0 16 16" style="fill:currentcolor">
+          <title>linkedin icon</title>
+          <path d="M13.632 13.635h-2.37V9.922c0-.886-.018-2.025-1.234-2.025-1.235 0-1.424.964-1.424 1.96v3.778h-2.37V6H8.51V7.04h.03c.318-.6 1.092-1.233 2.247-1.233 2.4 0 2.845 1.58 2.845 3.637v4.188zM3.558 4.955c-.762 0-1.376-.617-1.376-1.377 0-.758.614-1.375 1.376-1.375.76 0 1.376.617 1.376 1.375 0 .76-.617 1.377-1.376 1.377zm1.188 8.68H2.37V6h2.376v7.635zM14.816 0H1.18C.528 0 0 .516 0 1.153v13.694C0 15.484.528 16 1.18 16h13.635c.652 0 1.185-.516 1.185-1.153V1.153C16 .516 15.467 0 14.815 0z"></path>
+        </svg>
+      </a>
+      <a class="link dim black dib br-100 h2 w2 mr3 pa2 bg-near-white ba b--black-10" href="https://github.com/megmotion" title="">
+        <svg data-icon="github" viewBox="0 0 32 32" style="fill:currentcolor">
+          <title>github icon</title>
+          <path d="M0 18 C0 12 3 10 3 9 C2.5 7 2.5 4 3 3 C6 3 9 5 10 6 C12 5 14 5 16 5 C18 5 20 5 22 6 C23 5 26 3 29 3 C29.5 4 29.5 7 29 9 C29 10 32 12 32 18 C32 25 30 30 16 30 C2 30 0 25 0 18 M3 20 C3 24 4 28 16 28 C28 28 29 24 29 20 C29 16 28 14 16 14 C4 14 3 16 3 20 M8 21 A1.5 2.5 0 0 0 13 21 A1.5 2.5 0 0 0 8 21 M24 21 A1.5 2.5 0 0 0 19 21 A1.5 2.5 0 0 0 24 21 z"></path>
+        </svg>
+      </a>
+    </footer>
+    </body>  
 </html>

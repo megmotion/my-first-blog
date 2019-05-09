@@ -1,40 +1,36 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<div class="posts-wrapper col-md-9">
+<div class="posts-wrapper">
+	<section class="mw8 center avenir">
 	{% for post in posts %}
-		<div class="col-sm-12">
-			<div class="thumbnail">
-				<div class="caption">
-					
+		<article class="bt bb b--black-10 bg-white mt3 mb3">
+			<div class="db pv4 ph3 ph0-l no-underline black dim">
+				<div class="flex flex-column flex-row-ns">
 					{% if post.image %}
-					<img src="{{ post.image.url }}" class="img-responsive" alt="My image"> 
+						<div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+				          	<img src="{{ post.image.url }}" class="db ml3" alt="Photo">
+				        </div>
 					{% endif %}
-					<div class="post-header" >
-						<small> {{ post.published_date|timesince }} ago  by {{post.author}}</small>
-						<h3><a class = "post-title" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
-					</div>
-					<p>{{ post.text|linebreaksbr}}</p>
-					</br>
-					<a href="{% url 'post_detail' pk=post.pk %}">Komentarze: {{ post.approved_comments.count }}</a>
-					</br>
-					</br>
-					<p><a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark" role="button">Read more</a></p>
+						<div class="w-100 w-60-ns pl4-ns pr4">
+				          <a href="{% url 'post_detail' pk=post.pk %}" class="f3 fw1 mt0 lh-title baskerville i no-underline black" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+				          <p class="p1 f6 f5-l lh-copy"> {{ post.text|linebreaksbr}} </p>
+				          <p class="f6 lh-copy mv0 ">{{ post.published_date|timesince }} ago | By {{post.author}} | {{ post.approved_comments.count }} comments</p>
+				        </div>
 				</div>
 			</div>
-		</div> 
+		</article>
 	{% endfor %}
-	<div class="pagination">
+	</section> 
+	<div class="pagination mw8 tc center avenir pv3">
 	    <span class="step-links">
 	        {% if posts.has_previous %}
 	            <a href="?page=1">&laquo; first</a>
 	            <a href="?page={{ posts.previous_page_number }}">previous</a>
 	        {% endif %}
-
 	        <span class="current">
 	            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
 	        </span>
-
 	        {% if posts.has_next %}
 	            <a href="?page={{ posts.next_page_number }}">next</a>
 	            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>

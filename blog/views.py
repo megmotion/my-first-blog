@@ -5,20 +5,42 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
+from django.db.models import Q
 from django.core.paginator import Paginator
 
 
 def post_list(request):
     posts_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    paginator = Paginator(posts_list, 3) # Show 25 contacts per page
+    paginator = Paginator(posts_list, 3) 
     page = request.GET.get('page')
     posts = paginator.get_page(page)
     return render(request, 'blog/post_list.html', {'posts': posts})
+
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
+
+def gallery(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    return render(request, 'blog/gallery.html', {'posts': posts})
+
+
+def contact(request):
+    return render(request, 'blog/contactForm.html')
+
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        results = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query))
+    else:
+        results = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    paginator = Paginator(results, 3) 
+    page=request.GET.get('page')
+    posts=paginator.get_page(page)
+    return render(request, 'blog/post_list.html', {'posts': posts})
 
 @login_required
 def post_new(request):
