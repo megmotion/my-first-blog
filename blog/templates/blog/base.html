@@ -3,64 +3,75 @@
 <html>
     <head>
 	    	<title>{% block title %}Ciężkie Życie Horacka{% endblock %}</title>
-	    	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    		<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Open+Sans" rel="stylesheet" type='text/css'>
-    		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"> </script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"> </script>
+	    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	    	<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+	    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	    	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Open+Sans" rel="stylesheet" type='text/css'>
+
     </head>
     <body>
-	    <nav class="navbar navbar-dark" role="navigation">
-	    	<div class="container"
-			  <div class="container-fluid">
-			    <!-- Brand and toggle get grouped for better mobile display -->
-			    <div class="navbar-header navbar-expand-md fixed-top"> 
-	    			<a class="navbar-brand" href="{% url 'post_list' %}">Ciężkie Życie Horacka</a>
-	    			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
-	    				<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-	    			</button>
-			    </div>
-
-			    <!-- Collect the nav links, and other content for toggling -->
-			    <div class="collapse navbar-collapse navbar-right " id="topNavBar">
-			      
-				  <!-- links -->
-			      <ul class="nav navbar-nav">
-			      		
-	    				<li class="active">
-	    					<a href="{% url 'post_list' %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;Blog</a>
-	    				</li>
-	    				<li class="">
-	    					<a href="#"><span class="fa fa-paw" aria-hidden="true"></span>&nbsp;O Horacku</a>
-	    				</li>
-	    				<li class="">
-	    					<a href="#"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;Galeria</a>
-	    				</li>
-	    				<li class="">
-	    					<a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;Kontakt</a>
-	    				</li>
-	    				{% if user.is_authenticated %} 
-	    				<li class=""> <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>&nbsp;Nowy post</a>
-	    				</li>
-	    				<li class=""> <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span>&nbsp;Drafty</a>
-	    				</li>
-	    				<li class=""> <a href="{% url 'logout' %}" class="top-menu" >Hello {{ user.username }} </a>
-	    				</li>
-			    			
-						{% else %}
-        				<li class=""><a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a></li>
-    					{% endif %}
-	    				
-	    			</ul>
-			    </div><!-- /.navbar-collapse -->
-			  </div><!-- /.container -->
+    <!--Top Bar-->
+    <div class="top-wrapper">
+        <div class="top-left col-md-8">
+        </div>
+        <div class="top-right col-md-4">
+            <div class="search-box">
+                <div class="search-line">
+                    <form  role="search" method="get" action="#" id="searchform" class="searchform">
+                        <input type="text" name="q" value="" placeholder="Search and hit enter...">
+                        <i class="fa fa-search search-desktop" aria-hidden="true"></i>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="header-image">
+        <div class="topimage">
+        </div>
+    </div>
+	<div class="pagenav">
+        <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
+	    	<!-- Brand and toggle get grouped for better mobile display --> 
+			
+			<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#topNavBar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Collect the nav links, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="topNavBar">
+			  <!-- links -->
+		    	<ul class="navbar-nav ml-auto">		      		
+    				<li class="nav-item">
+    					<a class="nav-link text-nowrap" href="{% url 'post_list' %}">Blog</a>
+    				</li>
+    				<li class="nav-item">
+    					<a class="nav-link text-nowrap" href="#">O Horacku</a>
+    				</li>
+    				<li class="nav-item">
+    					<a class="nav-link text-nowrap" href="#">Galeria</a>
+    				</li>
+    				<li class="nav-item">
+    					<a class="nav-link text-nowrap" href="#">Kontakt</a>
+    				</li>
+    				{% if user.is_authenticated %} 
+    				<li class="nav-item"> 
+    					<a class="nav-link text-nowrap" href="{% url 'post_new' %}">Nowy post</a>
+    				</li>
+    				<li class="nav-item"> 
+    					<a class="nav-link text-nowrap" href="{% url 'post_draft_list' %}">Drafty</a>
+    				</li>
+    				<li class="nav-item"> 
+    					<a class="nav-link text-nowrap" href="{% url 'logout' %}" >Log out </a>
+    				</li>		    			
+					{% else %}
+    				<li class="nav-item">
+    					<a class="nav-link text-nowrap" href="{% url 'login' %}" > Login</a>
+    				</li>
+					{% endif %}  				
+    			</ul>
+    		</div>
 	    </nav> 
-
+    </div>
+    <!--End Top Bar-->
 	    <div class="content container">
 	        <div class="row">
 	        	
@@ -70,5 +81,21 @@
 	            </div>
 	        </div>
 	    </div>
+
+        <div class="sidebar">
+            <div class="search-box">
+                <h3> Search </h3>
+                <div class="search-line">
+                    <form  role="search" method="get" action="#" id="searchform" class="searchform">
+                        <input type="text" class="form-control" name="q" value="" placeholder="Search and hit enter...">
+                        <i class="fa fa-search search-desktop" aria-hidden="true"></i>
+                    </form>
+                </div>
+            </div>
+        </div>
+<!--_Script source files-->
+    	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"> </script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"> </script>
     </body>
 </html>
